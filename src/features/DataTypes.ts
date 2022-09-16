@@ -13,3 +13,8 @@ export type IMain = {
   pressure: number;
   humidity: number;
 };
+
+export type IWind = {
+  speed: number;
+  deg: number;
+};

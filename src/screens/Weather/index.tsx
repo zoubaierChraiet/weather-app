@@ -1,33 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Librairies
-import Button from "../../components/base/Button";
-import Input from "../../components/base/Input";
+import Form from "../../components/form";
+import Weather from "../../components/weather";
 
 // Store
 import { getWeather } from "../../features/weather/weatherSlice";
 
 // Hooks
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { selectResponseStatus } from "../../selectors/weather";
 
 interface IProps {}
 
 const WeatherScreen: React.FC<IProps> = () => {
-  const [searchText, setSearchText] = useState("");
+  const [weatherState, setWeatherState] = useState(() => ({
+    searchText: "",
+    errorMessage: "",
+  }));
   const dispatch = useAppDispatch();
+  const status = useAppSelector(selectResponseStatus)
+
+  useEffect(() => {
+    if(status === 'failed') {
+      setWeatherState({...weatherState, errorMessage: "Please search for a valid city"})
+    } else {
+      setWeatherState({...weatherState, errorMessage: ""})
+    }
+  }, [status])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(event.target.value);
+    setWeatherState({ ...weatherState, searchText: event.target.value });
   };
 
-  const handleSearchClick = () => {
-    dispatch(getWeather(searchText));
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement | HTMLButtonElement>) => {
+    event.preventDefault();
+    dispatch(getWeather(weatherState.searchText));
+    setWeatherState({ ...weatherState, searchText: "" });
   };
 
   return (
     <div>
-      <Input value={searchText} onChange={handleInputChange} type={"text"} />
-      <Button label="Get weather" onClick={handleSearchClick} />
+      <Form
+        errorMessage={weatherState.errorMessage}
+        onChange={handleInputChange}
+        onSubmit={handleSubmit}
+        value={weatherState.searchText}
+      />
+      {status === 'idle' && <Weather />}
     </div>
   );
 };

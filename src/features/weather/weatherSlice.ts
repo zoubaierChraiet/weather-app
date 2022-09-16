@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IWeather, IMain } from "../DataTypes";
+import { IWeather, IMain, IWind } from "../DataTypes";
 import { fetchWeather } from "./calls";
 
 export interface WeatherState {
   status: "idle" | "loading" | "failed";
   weather: IWeather[];
   name: string;
-  main: IMain | null
+  main: IMain | null;
+  wind: IWind | null;
 }
 
 const initialState: WeatherState = {
@@ -14,6 +15,7 @@ const initialState: WeatherState = {
   main: null,
   name: '',
   weather: [],
+  wind: null,
 };
 
 export const getWeather = createAsyncThunk(
@@ -32,6 +34,7 @@ export const counterSlice = createSlice({
       state.main = action.payload.main;
       state.weather = action.payload.weather;
       state.name = action.payload.name;
+      state.wind = action.payload.wind;
     },
   },
   extraReducers: (builder) => {
@@ -44,12 +47,14 @@ export const counterSlice = createSlice({
         state.main = action.payload.main;
         state.weather = action.payload.weather;
         state.name = action.payload.name;
+        state.wind = action.payload.wind;
       })
       .addCase(getWeather.rejected, (state) => {
         state.status = "failed";
         state.main = initialState.main;
         state.weather = initialState.weather;
         state.name = initialState.name;
+        state.wind = initialState.wind;
       });
   },
 });

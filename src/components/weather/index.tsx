@@ -6,7 +6,7 @@ import { Opacity, Air, TireRepair } from "@mui/icons-material";
 import clsx from "clsx";
 
 // Components
-import Card from "../../components/base/Card";
+import Card from "../base/Card";
 
 // Hooks
 import { useAppSelector } from "../../hooks/redux";

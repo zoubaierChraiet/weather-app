@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { CircularProgress, Typography } from "@mui/material";
 
 // Components
-import Form from "../../components/form";
-import Weather from "../../components/weather";
+import Form from "../../components/Form";
+import Weather from "../../components/Weather";
 
 // Store
 import { getWeather } from "../../features/weather/weatherSlice";

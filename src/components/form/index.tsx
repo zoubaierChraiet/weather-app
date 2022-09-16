@@ -1,8 +1,8 @@
 import React from "react";
 
 // Librairies
-import Button from "../../components/base/Button";
-import Input from "../../components/base/Input";
+import Button from "../base/Button";
+import Input from "../base/Input";
 
 // Styles
 import { useStyles } from "./style";

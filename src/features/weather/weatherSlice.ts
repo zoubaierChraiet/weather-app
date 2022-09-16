@@ -1,13 +1,19 @@
+// Librairies
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IWeather, IMain, IWind } from "../DataTypes";
+
+// Types
+import { IWeather, IMain, IWind, ISystem } from "../DataTypes";
+
+// Calls
 import { fetchWeather } from "./calls";
 
 export interface WeatherState {
-  status: "idle" | "loading" | "failed";
+  status: "idle" | "loading" | "failed" | "loaded";
   weather: IWeather[];
   name: string;
   main: IMain | null;
   wind: IWind | null;
+  sys: ISystem | null;
 }
 
 const initialState: WeatherState = {
@@ -16,6 +22,7 @@ const initialState: WeatherState = {
   name: '',
   weather: [],
   wind: null,
+  sys: null,
 };
 
 export const getWeather = createAsyncThunk(
@@ -32,9 +39,11 @@ export const counterSlice = createSlice({
   reducers: {
     getWeatherData: (state, action: PayloadAction<WeatherState>) => {
       state.main = action.payload.main;
+      state.status = action.payload.status;
       state.weather = action.payload.weather;
       state.name = action.payload.name;
       state.wind = action.payload.wind;
+      state.sys = action.payload.sys;
     },
   },
   extraReducers: (builder) => {
@@ -42,12 +51,13 @@ export const counterSlice = createSlice({
       .addCase(getWeather.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(getWeather.fulfilled, (state, action) => {
-        state.status = "idle";
+      .addCase(getWeather.fulfilled, (state, action: PayloadAction<WeatherState>) => {
+        state.status = "loaded";
         state.main = action.payload.main;
         state.weather = action.payload.weather;
         state.name = action.payload.name;
         state.wind = action.payload.wind;
+        state.sys = action.payload.sys;
       })
       .addCase(getWeather.rejected, (state) => {
         state.status = "failed";
@@ -55,6 +65,7 @@ export const counterSlice = createSlice({
         state.weather = initialState.weather;
         state.name = initialState.name;
         state.wind = initialState.wind;
+        state.sys = initialState.sys;
       });
   },
 });

@@ -9,7 +9,11 @@ interface IProps extends ButtonProps {
 
 const ButtonComponent: React.FC<IProps> = ({ label, ...props }) => {
   return (
-    <Button variant="outlined" {...props}>
+    <Button
+      variant="outlined"
+      data-testid="content-button"
+      {...props}
+    >
       {label}
     </Button>
   );

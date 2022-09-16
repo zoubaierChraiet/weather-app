@@ -1,8 +1,23 @@
-.container {
+.appContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     flex-wrap: wrap;
-    height: 97vh;
+    height: 100vh;
+    background: url("/public/assets/images/background.jpg");
+    background-position: inherit;
+}
+
+.flexRowAlignCenter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.flexRowSpaceBetweenCenter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }

@@ -1,14 +1,19 @@
 // Components
-import Weather from './screens/Weather';
+import Weather from "./screens/Weather";
+
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 // Styles
-import './App.css';
+import "./App.css";
 
 function App() {
   return (
-    <div className='container'>
-      <Weather />
-    </div>
+    <Provider store={store}>
+      <div className="appContainer">
+        <Weather />
+      </div>
+    </Provider>
   );
 }
 

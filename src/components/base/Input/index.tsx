@@ -12,17 +12,17 @@ const InputComponent: React.FC<TextFieldProps> = ({
   ...props
 }) => {
   return (
-    <div>
-      <TextField
-        type={type}
-        value={value}
-        onChange={onChange}
-        label={label}
-        placeholder={placeholder}
-        variant="standard"
-        {...props}
-      />
-    </div>
+    <TextField
+      role="textbox"
+      inputProps={{ "data-testid": "content-input" }}
+      type={type}
+      value={value}
+      onChange={onChange}
+      label={label}
+      placeholder={placeholder}
+      variant="standard"
+      {...props}
+    />
   );
 };
 

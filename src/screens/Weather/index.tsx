@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 // Librairies
+import { CircularProgress, Typography } from "@mui/material";
+
+// Components
 import Form from "../../components/form";
 import Weather from "../../components/weather";
 
@@ -19,21 +22,26 @@ const WeatherScreen: React.FC<IProps> = () => {
     errorMessage: "",
   }));
   const dispatch = useAppDispatch();
-  const status = useAppSelector(selectResponseStatus)
+  const status = useAppSelector(selectResponseStatus);
 
   useEffect(() => {
-    if(status === 'failed') {
-      setWeatherState({...weatherState, errorMessage: "Please search for a valid city"})
+    if (status === "failed") {
+      setWeatherState((ws) => ({
+        ...ws,
+        errorMessage: "Please search for a valid city",
+      }));
     } else {
-      setWeatherState({...weatherState, errorMessage: ""})
+      setWeatherState((ws) => ({ ...ws, errorMessage: "" }));
     }
-  }, [status])
+  }, [status]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setWeatherState({ ...weatherState, searchText: event.target.value });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement | HTMLButtonElement>) => {
+  const handleSubmit = (
+    event: React.FormEvent<HTMLFormElement | HTMLButtonElement>
+  ) => {
     event.preventDefault();
     dispatch(getWeather(weatherState.searchText));
     setWeatherState({ ...weatherState, searchText: "" });
@@ -41,13 +49,15 @@ const WeatherScreen: React.FC<IProps> = () => {
 
   return (
     <div>
+      <Typography variant="h2" gutterBottom>Simple Weather App</Typography>
       <Form
         errorMessage={weatherState.errorMessage}
         onChange={handleInputChange}
         onSubmit={handleSubmit}
         value={weatherState.searchText}
       />
-      {status === 'idle' && <Weather />}
+      {status === "loading" && <CircularProgress />}
+      {status === "loaded" && <Weather />}
     </div>
   );
 };

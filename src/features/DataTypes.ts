@@ -18,3 +18,11 @@ export type IWind = {
   speed: number;
   deg: number;
 };
+
+export type ISystem = {
+  country: string;
+  id: number;
+  sunrise: number;
+  sunset: number;
+  type: number;
+};

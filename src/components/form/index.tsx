@@ -28,11 +28,12 @@ const Form: React.FC<IProps> = ({
       <div className={classes.root}>
         <Input
           value={value}
-          placeholder="Get weather"
+          placeholder="Type your location..."
           onChange={onChange}
           type="text"
+          className={classes.input}
         />
-        <Button label="Get weather" onClick={onSubmit} />
+        <Button label="Get weather" onClick={onSubmit} disabled={!value} />
       </div>
       <span className={classes.errorMessage}>
         {errorMessage || null}

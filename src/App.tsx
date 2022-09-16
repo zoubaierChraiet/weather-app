@@ -1,10 +1,13 @@
+// Components
+import Weather from './screens/Weather';
+
+// Styles
 import './App.css';
-import InputComponent from './components/base/Input';
 
 function App() {
   return (
     <div>
-      <InputComponent />
+      <Weather />
     </div>
   );
 }

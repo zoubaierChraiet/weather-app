@@ -1,29 +1,29 @@
-import React, { useState } from "react";
-import { getWeather, getWeatherData } from "../../../features/weather/weatherSlice";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import { selectWeather } from "../../../selectors/weather";
+import React from "react";
 
-// Hooks
+// Librairies
+import { TextField, TextFieldProps } from "@mui/material";
 
-interface IProps {}
-
-const InputComponent: React.FC<IProps> = () => {
-  const [searchText, setSearchText] = useState("");
-  const { main, name, status, weather } = useAppSelector(selectWeather);
-  const dispatch = useAppDispatch();
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(event.target.value);
-  }
-
-  const handleSearchClick = () => {
-    dispatch(getWeather(searchText))
-  }
-
-  return <div>
-    <input type="text" name="search" value={searchText} onChange={handleInputChange} />
-    <button onClick={handleSearchClick}>search weather</button>
-  </div>;
+const InputComponent: React.FC<TextFieldProps> = ({
+  value,
+  onChange,
+  type,
+  label,
+  placeholder,
+  ...props
+}) => {
+  return (
+    <div>
+      <TextField
+        type={type}
+        value={value}
+        onChange={onChange}
+        label={label}
+        placeholder={placeholder}
+        variant="standard"
+        {...props}
+      />
+    </div>
+  );
 };
 
 export default InputComponent;
